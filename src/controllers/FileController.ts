@@ -16,7 +16,7 @@ import {
 const FileController = () => {
     const UploadFile = async(req:any, res:UploadFileAndUrlResponse) => {
         const files = req.files;
-        const userId:any = req.header.Authorization
+        const userId:any = req.header("Authorization")
 
         try {
             const response = await s3Service().uploadToS3(files.file);
@@ -64,7 +64,7 @@ const FileController = () => {
 
     const UploadFileToS3WithUrl = async(req:any,res:UploadFileAndUrlResponse) => {
         const { body } = req;
-        const userId:any = req.header.Authorization;
+        const userId:any = req.header("Authorization")
 
         try {
             const response = await s3Service().uploadFileToS3WithUrl(body.url,body.fileName);

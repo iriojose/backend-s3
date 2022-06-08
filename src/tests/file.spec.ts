@@ -10,7 +10,6 @@ jest.mock("../../models/index", () => ({
 }));
 
 jest.mock("../utils/policy", () => jest.fn((req,res,next) => {
-    req.header.Authorization = 1
     next()
 }));
 
@@ -37,6 +36,7 @@ describe("File Routes", () => {
 
         const res = await request(app.server).post(`/api/files/upload`)
         .set('Accept', 'application/json')
+        .set({ authorization: {id:1}})
         .attach('file', filePath);
 
         expect(res.status).toEqual(200);
@@ -58,6 +58,7 @@ describe("File Routes", () => {
     test("Upload with url assers", async() => {
         const res = await request(app.server).post(`/api/files/uploadUrl`)
         .set('Accept', 'application/json')
+        .set({ authorization: {id:1}})
         .send({
             fileName:"ejemplo.png",
             url:"http://google.com"
@@ -70,6 +71,7 @@ describe("File Routes", () => {
     test("Get all assers", async() => {
         const res = await request(app.server).get(`/api/files/getAll`)
         .set('Accept', 'application/json')
+        .set({ Authorization: {id:1}})
         .query({fileName:"ejemplo.png"})
         .send()
 
